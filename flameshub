@@ -1,0 +1,189 @@
+local GUI = game.CoreGui:FindFirstChild("Darkrai");if GUI then GUI:Destroy();end
+
+getgenv().Notify = function(Logo,Slogan,Msg,Vert,Horz,Duration)
+    local DarkraiNotif = Instance.new("ScreenGui");
+    DarkraiNotif.Name = "DarkraiNotif";
+
+    local NotifFrame = Instance.new("Frame");
+    NotifFrame.Size = UDim2.new(0,300,0,90);
+    NotifFrame.BackgroundColor3 = Color3.new(0,0,0);
+    NotifFrame.BorderSizePixel = 0;
+
+    local uiCorner = Instance.new("UICorner");
+    uiCorner.CornerRadius = UDim.new(0,15);
+    uiCorner.Parent = NotifFrame;
+
+    local PosX,PosY
+    if Horz == "left" then
+        PosX = UDim.new(0,10);
+    elseif Horz == "right" then
+        PosX = UDim.new(1,-330);
+    else -- middle
+        PosX = UDim.new(0.5,-160);
+    end
+
+    if Vert == "top" then
+        PosY = UDim.new(0,20)
+    elseif Vert == "bottom" then
+        PosY = UDim.new(1,-140);
+    else -- middle
+        PosY = UDim.new(0.5,-60);
+    end
+
+    NotifFrame.Position = UDim2.new(PosX,PosY);
+
+    local Img = Instance.new("ImageLabel");
+    Img.Size = UDim2.new(0,30,0,30);
+    Img.Position = UDim2.new(0,15,0,7);
+    Img.Image = Logo;
+    Img.BackgroundTransparency = 1;
+    Img.Parent = NotifFrame;
+
+    local TitleLabel = Instance.new("TextLabel");
+    TitleLabel.Size = UDim2.new(0,260,0,30);
+    TitleLabel.Position = UDim2.new(0,65,0,7);
+    TitleLabel.Text = Slogan;
+    TitleLabel.TextColor3 = Color3.new(255,255,255);
+    TitleLabel.TextSize = 23;
+    TitleLabel.Font = Enum.Font.SourceSansBold;
+    TitleLabel.BackgroundTransparency = 1;
+    TitleLabel.TextXAlignment = Enum.TextXAlignment.Left;
+    TitleLabel.Parent = NotifFrame;
+
+    local MsgLabel = Instance.new("TextLabel");
+    MsgLabel.Size = UDim2.new(0,290,0,50);
+    MsgLabel.Position = UDim2.new(0,1,0,35);
+    MsgLabel.Text = Msg;
+    MsgLabel.TextColor3 = Color3.new(255,255,255);
+    MsgLabel.TextSize = 17;
+    MsgLabel.Font = Enum.Font.SourceSans;
+    MsgLabel.TextWrapped = true;
+    MsgLabel.BackgroundTransparency = 1;
+    MsgLabel.TextXAlignment = Enum.TextXAlignment.Center;
+    MsgLabel.TextYAlignment = Enum.TextYAlignment.Center;
+    MsgLabel.Parent = NotifFrame;
+
+    local CloseButton = Instance.new("TextButton");
+    CloseButton.Size = UDim2.new(0,25,0,25);
+    CloseButton.Position = UDim2.new(1,-35,0,5);
+    CloseButton.Text = "X";
+    CloseButton.TextColor3 = Color3.new(1,1,1);
+    CloseButton.BackgroundTransparency = 1;
+    CloseButton.Font = Enum.Font.SourceSansBold;
+    CloseButton.TextSize = 19;
+    CloseButton.Parent = NotifFrame;
+
+    local function CloseNotif()
+        local TweenS = game:GetService("TweenService");
+        local Info = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out);
+        local Tween = TweenS:Create(NotifFrame, Info, {BackgroundTransparency = 1});
+        Tween:Play();
+        task.wait(0.25);
+        DarkraiNotif:Destroy();
+    end
+
+    CloseButton.MouseButton1Click:Connect(CloseNotif);
+
+    NotifFrame.Parent = DarkraiNotif;
+    DarkraiNotif.Parent = game.CoreGui;
+
+    task.delay(Duration,CloseNotif);
+end
+
+repeat task.wait(0.25) until game:IsLoaded();
+local ScreenGui = Instance.new("ScreenGui");
+ScreenGui.Parent = game.CoreGui;
+
+local LoaderFrame = Instance.new("Frame");
+LoaderFrame.Parent = ScreenGui;
+LoaderFrame.BackgroundColor3 = Color3.fromRGB(0,0,0);
+LoaderFrame.Size = UDim2.new(0.3,0,0.25,0);
+LoaderFrame.Position = UDim2.new(0.35,0,0.345,0);
+LoaderFrame.BorderSizePixel = 0;
+
+local CornerUI = Instance.new("UICorner");
+CornerUI.CornerRadius = UDim.new(0,15);
+CornerUI.Parent = LoaderFrame;
+
+local BlurEffect = Instance.new("BlurEffect");
+BlurEffect.Size = 25;
+BlurEffect.Parent = game.Lighting;
+
+local Icon = Instance.new("ImageLabel");
+Icon.Parent = LoaderFrame;
+Icon.Size = UDim2.new(0,70,0,70);
+Icon.Position = UDim2.new(0.015,0,0.013,0);
+Icon.BackgroundTransparency = 1;
+Icon.Image = getgenv().Icon;
+
+local Title = Instance.new("TextLabel");
+Title.Parent = LoaderFrame;
+Title.Size = UDim2.new(0.6,0,0.3,0);
+Title.Position = UDim2.new(0.20,0,0.1,0);
+Title.BackgroundTransparency = 1;
+Title.Text = "Flame's Hub Launcher";
+Title.TextColor3 = Color3.new(1,1,1);
+Title.TextScaled = true;
+
+Title.Font = Enum.Font.SourceSansBold;
+local LoadingBarBackground = Instance.new("Frame");
+LoadingBarBackground.Parent = LoaderFrame;
+LoadingBarBackground.Size = UDim2.new(0.9,0,0.15,0);
+LoadingBarBackground.Position = UDim2.new(0.05,0,0.75,0);
+LoadingBarBackground.BackgroundColor3 = Color3.new(0.2,0.2,0.2);
+LoadingBarBackground.BorderSizePixel = 0;
+
+local LoadingBar = Instance.new("Frame");
+LoadingBar.Parent = LoadingBarBackground;
+LoadingBar.Size = UDim2.new(0,0,1,0);
+LoadingBar.BackgroundColor3 = Color3.new(1,1,1);
+LoadingBar.BorderSizePixel = 0;
+
+local LoadingBarBackgroundCorner = Instance.new("UICorner");
+LoadingBarBackgroundCorner.CornerRadius = UDim.new(0,5);
+LoadingBarBackgroundCorner.Parent = LoadingBarBackground;
+local LoadingBarCorner = Instance.new("UICorner");
+LoadingBarCorner.CornerRadius = UDim.new(0,5);
+LoadingBarCorner.Parent = LoadingBar;
+
+local Version = Instance.new("TextLabel");
+Version.Parent = LoaderFrame;
+Version.Size = UDim2.new(0,80,0,25);
+Version.Position = UDim2.new(0.85,0,0.05,0);
+Version.BackgroundTransparency = 1;
+Version.Text = tostring(getgenv().CurrentVersion);
+Version.TextColor3 = Color3.new(1,1,1);
+Version.TextScaled = true;
+Version.Font = Enum.Font.SourceSansBold;
+
+local PercentageLabel = Instance.new("TextLabel");
+PercentageLabel.Parent = LoaderFrame;
+PercentageLabel.Size = UDim2.new(0.3,0,0.15,0);
+PercentageLabel.Position = UDim2.new(0.35,0,0.5,0);
+PercentageLabel.BackgroundTransparency = 1;
+PercentageLabel.Text = "0%";
+PercentageLabel.TextColor3 = Color3.new(1,1,1);
+PercentageLabel.TextScaled = true;
+PercentageLabel.Font = Enum.Font.SourceSansBold;
+
+task.wait(0.35);
+for i = 1,100 do
+    LoadingBar.Size = UDim2.new(i/100,0,1,0);
+    PercentageLabel.Text = tostring(i).."%";
+    task.wait(0.01);
+end
+
+task.wait(0.35);
+for i = 1,20 do
+    task.wait(0.05);
+    LoaderFrame.BackgroundTransparency = i/20;
+    LoadingBar.BackgroundTransparency = i/20;
+    LoadingBarBackground.BackgroundTransparency = i/20;
+    Title.TextTransparency = i/20;
+    Icon.ImageTransparency = i/20;
+    Version.TextTransparency = i/20;
+    PercentageLabel.TextTransparency = i/20;
+end
+
+BlurEffect.Size = 0;
+LoaderFrame:Destroy();
